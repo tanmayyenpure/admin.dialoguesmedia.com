@@ -1,0 +1,14 @@
+[15-Jun-2025 09:28:29 UTC] PHP Warning:  Undefined variable $emp_id in /home/dialogues/admin.dialoguesmedia.com/HRMS/HR/HRTasks/HRTasksListing.php on line 962
+[15-Jun-2025 09:28:33 UTC] PHP Warning:  Undefined variable $emp_id in /home/dialogues/admin.dialoguesmedia.com/HRMS/HR/HRTasks/HRTasksListing.php on line 962
+[15-Jun-2025 09:29:30 UTC] PHP Warning:  Undefined variable $emp_id in /home/dialogues/admin.dialoguesmedia.com/HRMS/HR/HRTasks/HRTasksListing.php on line 962
+[15-Jun-2025 09:29:53 UTC] PHP Warning:  Undefined variable $emp_id in /home/dialogues/admin.dialoguesmedia.com/HRMS/HR/HRTasks/HRTasksListing.php on line 962
+[15-Jun-2025 09:30:01 UTC] PHP Warning:  Undefined variable $emp_id in /home/dialogues/admin.dialoguesmedia.com/HRMS/HR/HRTasks/HRTasksListing.php on line 962
+[15-Jun-2025 09:30:07 UTC] PHP Warning:  Undefined variable $emp_id in /home/dialogues/admin.dialoguesmedia.com/HRMS/HR/HRTasks/HRTasksListing.php on line 962
+[15-Jun-2025 09:30:08 UTC] PHP Warning:  Undefined variable $emp_id in /home/dialogues/admin.dialoguesmedia.com/HRMS/HR/HRTasks/HRTasksListing.php on line 962
+[15-Jun-2025 09:30:10 UTC] PHP Warning:  Undefined variable $emp_id in /home/dialogues/admin.dialoguesmedia.com/HRMS/HR/HRTasks/HRTasksListing.php on line 962
+[16-Jun-2025 05:00:45 UTC] PHP Warning:  Undefined variable $emp_id in /home/dialogues/admin.dialoguesmedia.com/HRMS/HR/HRTasks/HRTasksListing.php on line 962
+[16-Jun-2025 05:00:45 UTC] PHP Warning:  Undefined array key "employee" in /home/dialogues/admin.dialoguesmedia.com/HRMS/HR/HRTasks/table1.php on line 12
+[16-Jun-2025 05:00:58 UTC] PHP Warning:  Undefined variable $emp_id in /home/dialogues/admin.dialoguesmedia.com/HRMS/HR/HRTasks/HRTasksListing.php on line 962
+[16-Jun-2025 05:00:58 UTC] PHP Warning:  Undefined array key "employee" in /home/dialogues/admin.dialoguesmedia.com/HRMS/HR/HRTasks/table1.php on line 91
+[16-Jun-2025 05:01:15 UTC] PHP Warning:  Undefined variable $emp_id in /home/dialogues/admin.dialoguesmedia.com/HRMS/HR/HRTasks/HRTasksListing.php on line 962
+[16-Jun-2025 05:01:32 UTC] PHP Warning:  Undefined variable $emp_id in /home/dialogues/admin.dialoguesmedia.com/HRMS/HR/HRTasks/HRTasksListing.php on line 962

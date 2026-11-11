@@ -1,0 +1,13 @@
+@media print {
+    body {
+        font-size: 14px;
+    }
+    /* Add any additional styles for printing here */
+    @page {
+        size: landscape;
+    }
+    /* Handle page breaks as needed */
+    .page-break {
+        page-break-before: always;
+    }
+}

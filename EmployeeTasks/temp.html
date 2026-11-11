@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Employee Task Listing</title>
+    <link rel="stylesheet" href="../Template/css/bootstrap.min.css">
+    <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
+    <link href="../Template/bootstrap-toggle/css/bootstrap-toggle.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../css/style.css">
+    <link href="../Template/vendor/fontawesome-free/css/all.css" rel="stylesheet" type="text/css">
+    <link href="../Template/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+    <style>
+        .table-header {
+            background-color: black;
+            color: white;
+            border: none;
+        }
+        
+        .custom-modal-body {
+            background-color: #fff;
+        }
+        
+        .toggle-handle {
+            background-color: aquamarine;
+        }
+    </style>
+</head>
+
+<body id="page-top">
+    <!-- SIDEBAR -->
+    <section id="sidebar">
+        <a href="#" class="brand">
+            <img src="../img/apple-touch-icon.png" alt="">
+            <span class="text">Dialoguesmedia</span>
+        </a>
+        <ul class="side-menu top">
+            <li class="active">
+                <a href="#">
+                    <i class='bx bxs-dashboard'></i>
+                    <span class="text">Dashboard</span>
+                </a>
+            </li>
+            <li>
+                <?php
+                // Check if the employee type is set in the session
+            if (isset($_SESSION['type'])) {
+                $employeeType = $_SESSION['type'];
+
+                // Check if the employee type is 2
+                if ($employeeType == 2) {
+                    echo '<a href="../Employee/EmployeeListing.php">
+                                <i class="bx bxs-people"></i>
+                                <span class="text">Employees</span>
+                            </a>';
+                } 
+            } else {
+                header("location: ../login.html");
+            }
+            ?>
+            </li>
+            <li>
+                <?php
+                // Check if the employee type is set in the session
+            if (isset($_SESSION['type'])) {
+                $employeeType = $_SESSION['type'];
+
+                // Check if the employee type is 2
+                if ($employeeType == 2) {
+                    echo '<a href="../EmployeeRoaster/EmployeeRoaster.php">
+                                <i class="bx bxs-people"></i>
+                                <span class="text">Attendance Roaster</span>
+                            </a>';
+                } 
+            } else {
+                header("location: ../login.html");
+            }
+            ?>
+            </li>
+
+        </ul>
+        <ul class="side-menu">
+        </ul>
+    </section>
+    <!-- SIDEBAR -->
+
+    <!-- CONTENT -->
+    <section id="content">
+        <!-- NAVBAR -->
+        <nav>
+            <i class='bx bx-menu'></i>
+            <a href="#" class="nav-link">Search here</a>
+            <form action="#">
+                <div class="form-input">
+                    <input type="search" placeholder="Search...">
+                    <button type="submit" class="search-btn"><i class='bx bx-search'></i></button>
+                </div>
+            </form>
+
+            <a href="#" class="profile">
+            </a>
+        </nav>
+        <!-- NAVBAR -->
+
+        <!-- MAIN -->
+        <main>
+            <!-- Page Wrapper -->
+            <div id="wrapper">
+                <!-- Begin Page Content -->
+                <div class="container-fluid">
+                    <div class="card-body">
+                        <!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#OpeningClosingModal">
+                    Capture Image
+                </button> -->
+                        <div class="modal fade" id="OpeningClosingModal" tabindex="-1" role="dialog" aria-labelledby="OpeningClosingModalLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered" " role=" document ">
+                                <div class="modal-content text-center ">
+                                    <div class="modal-header "
+                                        style="background-color: lightblue; text-align: center; border-bottom: 3px solid black; display: flex; ">
+                                        <h5 class="modal-title " id="OpeningClosingLabel " style="font-weight: bold; ">
+                                            Daily Report</h5>
+                                        <button type="button " class="close " data-dismiss="modal " aria-label="Close ">
+                                            <span aria-hidden="true ">&times;</span>
+                                        </button>
+                                    </div>
+
+                                    <div class="modal-body text-center ">
+                                        <form id="DailyReportForm ">
+                                            <style>
+                                                .table-bordered th,
+                                                .table-bordered td {
+                                                    border-width: 2px;
+                                                    border-color: #19191a;
+                                                    border-left: none;
+                                                }
+
+
+                                                .table-bordered td input,
+                                                .table-bordered td textarea {
+                                                    border: none;
+                                                    height: 40px;
+                                                }
+                                            </style>
+                                            <input type="hidden " id="task_id " name="task_id " disabled>
+                                            <input type="hidden " id="type " name="type " disabled>
+                                            <table class="table table-bordered ">
+                                                <tbody>
+                                                    <tr id="tasksRow ">
+                                                        <th rowspan="5 " style="vertical-align: top;; ">Tasks</th>
+                                                        <td><input type="text " class="form-control " id="task1 "
+                                                                name="tasks1 " required></td>
+                                                    </tr>
+                                                    <tr id="task2Row ">
+                                                        <td><input type="text " class="form-control " id="task2 "
+                                                                name="tasks2 "></td>
+                                                    </tr>
+                                                    <tr id="task3Row ">
+                                                        <td><input type="text " class="form-control " id="task3 "
+                                                                name="tasks3 "></td>
+                                                    </tr>
+                                                    <tr id="task4Row ">
+                                                        <td><input type="text " class="form-control " id="task4 "
+                                                                name="tasks4 "></td>
+                                                    </tr>
+                                                    <tr id="task5Row ">
+                                                        <td><input type="text " class="form-control " id="task5 "
+                                                                name="tasks5 "></td>
+                                                    </tr>
+                                                    <tr id="workDoneRow " style="display:none; ">
+                                                        <th rowspan="5 " style="vertical-align: top;; ">Work Done</th>
+                                                        <td><input type="text " class="form-control " id="workdone1 "
+                                                                name="workdone1 " required></td>
+                                                    </tr>
+                                                    <tr id="workdone2Row " style="display:none; ">
+                                                        <td><input type="text " class="form-control " id="workdone2 "
+                                                                name="workdone2 "></td>
+                                                    </tr>
+                                                    <tr id="workdone3Row " style="display:none; ">
+                                                        <td><input type="text " class="form-control " id="workdone3 "
+                                                                name="workdone3 "></td>
+                                                    </tr>
+                                                    <tr id="workdone4Row " style="display:none; ">
+                                                        <td><input type="text " class="form-control " id="workdone4 "
+                                                                name="workdone4 "></td>
+                                                    </tr>
+                                                    <tr id="workdone5Row " style="display:none; ">
+                                                        <td><input type="text " class="form-control " id="workdone5 "
+                                                                name="workdone5 "></td>
+                                                    </tr>
+                                                    <tr id="backlogRow " style="display:none; ">
+                                                        <th scope="row " style="vertical-align: top;; ">Backlog</th>
+                                                        <td><input type="text " class="form-control " id="backlog "
+                                                                name="backlog "></td>
+                                                    </tr>
+                                                    <tr id="reasonRow " style="display:none; ">
+                                                        <th scope="row " style="vertical-align: top;; ">Reason</th>
+                                                        <td><input type="text " class="form-control " id="reason "
+                                                                name="reason "></td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                            <button type="button " id="submitbutton " class="btn btn-primary "
+                                                onclick="submitattendance() ">Submit</button>
+                                        </form>
+                                    </div>
+                                    <!-- <div class="modal-footer ">
+                            <button type="button " class="btn btn-secondary " onclick="capturePhoto() ">Capture Live Image</button>
+                            <button type="button " class="btn btn-primary " onclick="uploadPhoto() ">Upload Image</button>
+                        </div> -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- <div class="card shadow mb-4 ">
+                        <div class="card-header ">
+                            <h6 class="m-0 font-weight-bold text-danger fs-15 ">Employee Task Listing</h6>
+                        </div>
+                        <div class="card-body ">
+                            <div class="table-responsive ">
+                                <table class="table " id="employeetable " width="100% " cellspacing="0 ">
+                                    <thead>
+                                        <tr class="table-header ">
+                                            <th>Emp ID</th>
+                                            <th>Employee Name </th>
+                                            <th>Date</th>
+                                            <th>Attendance</th>
+                                            <th>Time </th>
+                                            <th>Opening</th>
+                                            <th>Closing</th>
+                                            <th>Time</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <?php 
+                                 $base_url = "http:// " . $_SERVER['HTTP_HOST'] . dirname($_SERVER['PHP_SELF']);
+                                 $emp_id =$_GET['emp_id'];
+                                if ($emp_id == $_SESSION['emp_id']) {
+                                    $url = $base_url.'/read_employee_task.php?emp_id='.$emp_id;
+                                    $response = file_get_contents($url);
+                                    if ($response != false) {
+                                        $responseData = json_decode($response, true);
+                                        if ($responseData['status']=='success') {
+                                            $data = $responseData['data'];
+                                            if ($data == null) {
+                                                 echo "<script>console.log('No Data');</script>"; echo '
+                                <tr>'; // First column: Emp_ID echo '
+                                    <td>' . $_GET['emp_id'] . '</td>'; echo '
+                                    <td>'. $_SESSION['employee'] . '</td>'; // Second column: Date echo '
+                                    <td id="attendance_date">' . date('Y-m-d') . '</td>'; // Third column: Attendance with radio buttons Present and Absent echo '
+                                    <td>'; echo '<input type="radio" id="attendance_present" name="attendance_status" value="Present"> Present '; echo '<input type="radio" id="attendance_absent" name="attendance_status" value="Absent" data-toggle="tooltip"
+                                            data-title="Click to add reason of absense"> Absent'; echo '<input type="text" id="absentReason" name="absent_reason" style="display:none;" class="form-control" placeholder="Enter reason">'; echo '</td>'; echo '
+                                    <td>
+                                    </td>'; echo '
+                                    <td>Add</td>'; // Fifth column: Closing with a text saying View echo '
+                                    <td>Add</td>'; echo '
+                                    <td> </td>'; echo '</tr>'; } else if (is_array($data)) { echo "
+                                <script>
+                                    console.log('Considering Array');
+                                </script>"; $check_set_vals = $data[0]; if(!isTodayAtt($check_set_vals['attendance_date'])) { echo '
+                                <tr>'; // First column: Emp_ID echo '
+                                    <td>' . htmlspecialchars($check_set_vals['emp_id']) . '</td>'; echo '
+                                    <td>'. $_SESSION['employee'] . '</td>'; // Second column: Date echo '
+                                    <td id="attendance_date">' . date('Y-m-d') . '</td>'; // Third column: Attendance with radio buttons Present and Absent echo '
+                                    <td>'; echo '<input type="radio" id="attendance_present" name="attendance_status" value="Present"> Present '; echo '<input type="radio" id="attendance_absent" name="attendance_status" value="Absent" data-toggle="tooltip"
+                                            data-title="Click to add reason of absense"> Absent'; echo '<input type="text" id="absentReason" name="absent_reason" style="display:none;" class="form-control" placeholder="Enter reason">'; echo '</td>'; echo '
+                                    <td>
+                                    </td>'; echo '
+                                    <td>
+                                        Add
+                                    </td>'; echo '
+                                    <td>
+                                        Add
+                                    </td>'; echo '
+                                    <td> </td>'; echo '</tr>'; } // It's an array, loop through each row foreach ($data as $row) { echo '
+                                <tr>'; echo '
+                                    <td>' . htmlspecialchars($row['emp_id']) . '</td>'; echo '
+                                    <td>'. $_SESSION['employee'] . '</td>'; echo '
+                                    <td>' . htmlspecialchars($row['attendance_date']) . '</td>'; echo '
+                                    <td>'; echo '<input type="radio" value="Present" ' . ($row['attendance '] == 1 ? 'checked ' : 'disabled ') . '> Present '; echo '<input type="radio" value="Absent" ' . ($row['attendance '] == 0 ? 'checked ' : 'disabled
+                                            ') . '> Absent'; echo '</td>'; echo '
+                                    <td>' . htmlspecialchars(date('H:i:s', strtotime($row['opening_time']))) . '</td>'; echo '
+                                    <td>'; if ($row['attendance'] == 0) { echo 'Edit/View'; } else { echo '<a href="#" class="text-primary" onclick="showmodal(' . htmlspecialchars(json_encode($row), ENT_QUOTES, 'UTF-8') . ', true, false)">
+                                                            Edit/View
+                                                        </a>'; } echo '</td>'; echo '
+                                    <td>'; if ($row['attendance'] == 0) { echo 'Edit/View'; } else{ echo'
+                                        <a href="#" class="text-primary" onclick="showmodal(' . htmlspecialchars(json_encode($row), ENT_QUOTES, 'UTF-8') . ', false, true)">
+                                                            Edit/View
+                                                        </a>'; echo'
+                                    </td>'; } echo '
+                                    <td>' . htmlspecialchars(date('H:i:s', strtotime($row['closing_time']))) . '</td>'; echo '</tr>'; } } else { echo '
+                                <tr>'; echo '
+                                    <td>' . htmlspecialchars($data['emp_id']) . '</td>'; echo '
+                                    <td>'. $_SESSION['employee'] . '</td>'; echo '
+                                    <td>' . htmlspecialchars($data['attendance_date']) . '</td>'; echo '
+                                    <td>'; echo '<input type="radio" value="Present" ' . ($row['attendance '] == 1 ? 'checked ' : 'disabled ') . '> Present '; echo '<input type="radio" value="Absent" ' . ($row['attendance '] == 0 ? 'checked ' : 'disabled
+                                            ') . '> Absent'; echo '</td>'; echo '
+                                    <td>' . htmlspecialchars($data['opening']) . '</td>'; echo '
+                                    <td>' . htmlspecialchars($data['closing']) . '</td>'; echo '</tr>'; } } } else { echo "
+                                <script>
+                                    console.log('Some error');
+                                </script>"; } } else { header("location: ../login.html"); } ?>
+                                </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div> -->
+                </div>
+            </div>
+            <!-- /.container-fluid -->
+
+            </div>
+            <!-- End of Main Content -->
+            </div>
+            <!-- End of Content Wrapper -->
+            </div>
+            <!-- End of Page Wrapper -->
+        </main>
+        <!-- MAIN -->
+    </section>
+    <!-- CONTENT -->
+</body>
+<!-- Page level plugins -->
+
+<script src="../Template/vendor/jquery/jquery.min.js"></script>
+<script src="../Template/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="../Template/vendor/jquery-easing/jquery.easing.min.js"></script>
+<script src="../Template/js/popper.min.js"></script>
+<script src="../Template/vendor/datatables/jquery.dataTables.min.js"></script>
+<script src="../Template/vendor/datatables/dataTables.bootstrap4.min.js"></script>
+<script src="../Template/bootstrap-toggle/js/bootstrap-toggle.min.js"></script>
+<!-- Core plugin JavaScript-->
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var presentRadio = document.getElementById('attendance_present');
+        var absentRadio = document.getElementById('attendance_absent');
+        var absentReason = document.getElementById("absentReason");
+
+        // Add click event listeners to the radio buttons
+        presentRadio.addEventListener('click', function() {
+            disableRadio(absentRadio);
+            markattendance('Present');
+        });
+
+        absentRadio.addEventListener('click', function() {
+            //disableRadio(presentRadio);
+            document.getElementById("attendance_absent").nextSibling.nodeValue = "";
+            document.getElementById("absentReason").style.display = "inline-block";
+
+        });
+
+        // Function to disable the specified radio button
+        function disableRadio(radio) {
+            radio.disabled = true;
+        }
+        absentReason.addEventListener("blur", function() {
+            // Show an alert when the user clicks out of the text box
+            var reason = this.value.trim();
+            if (reason !== null && reason !== "") {
+                // Show an alert when the user clicks out of the text box
+                var saveConfirmation = confirm("Do you want to save?");
+                if (saveConfirmation) {
+                    // Add logic here to save the data
+                    markattendance('Absent');
+
+                }
+            } else {
+                alert('Please Provide Reason of Absense');
+            }
+        });
+    });
+
+    $(document).ready(function() {
+        $('[data-toggle="tooltip"]').tooltip();
+        var dataTable = $('#employeetable').DataTable({
+            "order": [
+                [0, "dsc"]
+            ]
+        });
+        var empIdFromUrl = "<?php echo isset($_GET['emp_id']) ? urlencode($_GET['emp_id']) : ''; ?>";
+        if (!empIdFromUrl) {
+            alert('Invalid URL: emp_id is required');
+        } else {
+            var url = 'read_employee_task.php?emp_id=' + empIdFromUrl;
+        }
+        $('#OpeningClosingModal').on('hidden.bs.modal', function() {
+            console.log('Modal closed');
+            resetvalues();
+        });
+
+    });
+</script>
+
+<script>
+    function showmodal(rowdata, opening, closing) {
+        $('#OpeningClosingModal').modal('show');
+        var taskrows = document.querySelectorAll('#task1, #task2, #task3, #task4, #task5');
+        var workDoneRows = document.querySelectorAll('#workDoneRow, #workdone2Row, #workdone3Row, #workdone4Row, #workdone5Row');
+        var backlogRow = document.getElementById('backlogRow');
+        var reasonRow = document.getElementById('reasonRow');
+        var typerow = document.getElementById('type');
+        var task_id = document.getElementById('task_id');
+        var submitbutton = document.getElementById('submitbutton');
+        submitbutton.style.display = (rowdata['attendance_date'] == "<?php echo date('Y-m-d'); ?>") ? 'inline-block' : 'none';
+        var currentDate = new Date();
+        var hours = currentDate.getHours();
+        var minutes = currentDate.getMinutes();
+        var formattedTime = ('0' + hours).slice(-2) + ':' + ('0' + minutes).slice(-2);
+        task_id.value = rowdata['task_id'];
+        for (var i = 1; i <= 5; i++) {
+            var taskKey = 'task' + i;
+            var inputField = document.getElementById(taskKey);
+            inputField.value = rowdata[taskKey];
+
+            // Disable the input field if the corresponding value in rowdata is not null
+            if (rowdata[taskKey] !== null && rowdata[taskKey] !== '') {
+                inputField.setAttribute('readonly', 'readonly');
+            } else {
+                inputField.removeAttribute('readonly');
+            }
+        }
+        if (closing) {
+            typerow.value = 'closing';
+            workDoneRows.forEach(function(row) {
+                row.style.display = 'table-row';
+            });
+            for (var i = 1; i <= 5; i++) {
+                var workdonekey = 'workdone' + i;
+                var inputField = document.getElementById(workdonekey);
+                inputField.value = rowdata[workdonekey];
+
+                // Disable the input field if the corresponding value in rowdata is not null
+                if (rowdata[workdonekey] !== null && rowdata[workdonekey] !== '') {
+                    inputField.setAttribute('readonly', 'readonly');
+                } else {
+                    inputField.removeAttribute('readonly');
+                }
+            }
+            taskrows.forEach(function(inputField) {
+                inputField.setAttribute('readonly', 'readonly');
+            });
+            document.getElementById('backlog').value = rowdata['backlog'];
+            document.getElementById('reason').value = rowdata['reason'];
+            backlogRow.style.display = 'table-row';
+            reasonRow.style.display = 'table-row';
+        } else {
+            typerow.value = 'opening';
+            workDoneRows.forEach(function(row) {
+                row.style.display = 'none';
+            });
+            for (var i = 1; i <= 5; i++) {
+                var taskKey = 'task' + i;
+                var inputField = document.getElementById(taskKey);
+                inputField.value = rowdata[taskKey];
+
+                // Disable the input field if the corresponding value in rowdata is not null
+                if (rowdata[taskKey] !== null && rowdata[taskKey] !== '') {
+                    inputField.setAttribute('readonly', 'readonly');
+                } else {
+                    inputField.removeAttribute('readonly');
+                }
+            }
+            backlogRow.style.display = 'none';
+            reasonRow.style.display = 'none';
+        }
+        OpeningClosingLabel.innerHTML = 'Daily Report ' + rowdata['attendance_date'] + '  ' + typerow.value + ' at ' + formattedTime;
+
+    }
+
+    function toggleFormFields(checkbox) {
+        var taskField = document.getElementById('taskField');
+        var actualWorkField = document.getElementById('actualWorkField');
+        var backlogField = document.getElementById('backlogField');
+
+        if (checkbox.checked) {
+            // Opening
+            taskField.style.display = 'block';
+            actualWorkField.style.display = 'none';
+            backlogField.style.display = 'none';
+        } else {
+            // Closing
+            taskField.style.display = 'none';
+            actualWorkField.style.display = 'block';
+            backlogField.style.display = 'block';
+        }
+    }
+
+    function markattendance(attendance) {
+        var attendance_date = document.getElementById('attendance_date').innerText;
+        if (attendance == 'Present') {
+            var data = {
+                "attendance_date": attendance_date,
+                "attendance": 1,
+                "emp_id": "<?php echo $_GET['emp_id'] ?>"
+            }
+            $.ajax({
+                type: 'POST',
+                url: 'create_employee_task.php',
+                data: data,
+                success: function(response) {
+                    if (response.status === 'success') {
+                        alert('Attendance marked successfully!');
+                        window.location.href = 'EmployeeTasksListing.php?emp_id=<?php echo $_GET['
+                        emp_id '] ?>';
+
+                    } else {
+                        alert('Error: ' + response.message);
+                    }
+                },
+                error: function(xhr, status, error) {
+                    alert('AJAX request failed: ' + status + ' - ' + error);
+                }
+            });
+        } else {
+            var absentReason = document.getElementById("absentReason").value;
+            var data = {
+                "attendance_date": attendance_date,
+                "attendance": 0,
+                "emp_id": "<?php echo $_GET['emp_id'] ?>",
+                "reason": absentReason
+            }
+            $.ajax({
+                type: 'POST',
+                url: 'create_employee_task.php',
+                data: data,
+                success: function(response) {
+                    if (response.status === 'success') {
+                        alert('Attendance marked successfully!');
+                        window.location.href = 'EmployeeTasksListing.php?emp_id=<?php echo $_GET['
+                        emp_id '] ?>';
+
+                    } else {
+                        alert('Error: ' + response.message);
+                    }
+                },
+                error: function(xhr, status, error) {
+                    alert('AJAX request failed: ' + status + ' - ' + error);
+                }
+            });
+        }
+
+    }
+
+    function submitattendance() {
+        var typerow = document.getElementById('type').value;
+        var task_id = document.getElementById('task_id').value;
+        var formData = {
+            "task_id": task_id,
+            "type": typerow,
+            "task1": document.getElementById('task1').value,
+            "task2": document.getElementById('task2').value,
+            "task3": document.getElementById('task3').value,
+            "task4": document.getElementById('task4').value,
+            "task5": document.getElementById('task5').value,
+            "workdone1": document.getElementById('workdone1').value,
+            "workdone2": document.getElementById('workdone2').value,
+            "workdone3": document.getElementById('workdone3').value,
+            "workdone4": document.getElementById('workdone4').value,
+            "workdone5": document.getElementById('workdone5').value,
+            "backlog": document.getElementById('backlog').value,
+            "reason": document.getElementById('reason').value
+        };
+        $.ajax({
+            type: 'POST',
+            url: 'update_employee_task.php',
+            data: formData,
+            success: function(response) {
+                if (response.status === 'success') {
+                    alert(typerow + " updated sucessfully");
+                    $('#OpeningClosingModal').modal('hide');
+                    resetvalues();
+                    window.location.href = 'EmployeeTasksListing.php?emp_id=<?php echo $_GET['
+                    emp_id '] ?>';
+
+                } else {
+                    alert('Error: ' + response.message);
+                }
+            },
+            error: function(xhr, status, error) {
+                alert('AJAX request failed: ' + status + ' - ' + error);
+            }
+        });
+
+    }
+
+    function resetvalues() {
+        var elements = ['task1', 'task2', 'task3', 'task4', 'task5', 'workdone1', 'workdone2', 'workdone3', 'workdone4', 'workdone5', 'backlog', 'reason'];
+
+        elements.forEach(function(elementId) {
+            var element = document.getElementById(elementId);
+            if (element) {
+                // Check if it's a form element with a value property
+                if (element.tagName === 'INPUT' || element.tagName === 'TEXTAREA' || element.tagName === 'SELECT') {
+                    element.value = '';
+                } else {
+                    element.innerText = '';
+                }
+            }
+        });
+
+    }
+
+    function isToday(dateString) {
+        var today = new Date();
+        var dateParts = dateString.split("-");
+        var attendanceDate = new Date(dateParts[0], dateParts[1] - 1, dateParts[2]);
+        return (
+            today.getDate() === attendanceDate.getDate() &&
+            today.getMonth() === attendanceDate.getMonth() &&
+            today.getFullYear() === attendanceDate.getFullYear()
+        );
+    }
+</script>
+
+</html>

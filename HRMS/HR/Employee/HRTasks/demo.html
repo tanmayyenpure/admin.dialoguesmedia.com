@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div class="modal fade" id="" tabindex="-1" role="dialog" >
+        <div class="modal-dialog modal-dialog-centered" role=" document">
+          <div class="modal-content text-center">
+            <div class="modal-header" style="background-color: lightblue; text-align: center; border-bottom: 3px solid black; display: flex;">
+              <h5 class="modal-title" id="OpeningClosingLabel" style="font-weight: bold;">Daily Report</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+
+            <div class="modal-body text-center">
+              <form id="DailyReportForm">
+                <style>
+                  .table-bordered th,
+                  .table-bordered td {
+                    border-width: 2px;
+                    border-color: #19191a;
+                    border-left: none;
+                  }
+
+
+                  .table-bordered td input,
+                  .table-bordered td textarea {
+                    border: none;
+                    height: 40px;
+                  }
+                </style>
+                <input type="hidden" id="task_id" name="task_id" disabled>
+                <input type="hidden" id="type" name="type" disabled>
+                <table class="table table-bordered">
+                  <tbody>
+                    <tr id="tasksRow">
+                      <th rowspan="5" style="vertical-align: top;;">Tasks</th>
+                      <td><input type="text" class="form-control" id="task1" name="tasks1" required></td>
+                    </tr>
+                    <tr id="task2Row">
+                      <td><input type="text" class="form-control" id="task2" name="tasks2"></td>
+                    </tr>
+                    <tr id="task3Row">
+                      <td><input type="text" class="form-control" id="task3" name="tasks3"></td>
+                    </tr>
+                    <tr id="task4Row">
+                      <td><input type="text" class="form-control" id="task4" name="tasks4"></td>
+                    </tr>
+                    <tr id="task5Row">
+                      <td><input type="text" class="form-control" id="task5" name="tasks5"></td>
+                    </tr>
+                    <tr id="workDoneRow" style="display:none;">
+                      <th rowspan="5" style="vertical-align: top;;">Work Done</th>
+                      <td><input type="text" class="form-control" id="workdone1" name="workdone1" required></td>
+                    </tr>
+                    <tr id="workdone2Row" style="display:none;">
+                      <td><input type="text" class="form-control" id="workdone2" name="workdone2"></td>
+                    </tr>
+                    <tr id="workdone3Row" style="display:none;">
+                      <td><input type="text" class="form-control" id="workdone3" name="workdone3"></td>
+                    </tr>
+                    <tr id="workdone4Row" style="display:none;">
+                      <td><input type="text" class="form-control" id="workdone4" name="workdone4"></td>
+                    </tr>
+                    <tr id="workdone5Row" style="display:none;">
+                      <td><input type="text" class="form-control" id="workdone5" name="workdone5"></td>
+                    </tr>
+                    <tr id="backlogRow" style="display:none;">
+                      <th scope="row" style="vertical-align: top;;">Backlog</th>
+                      <td><input type="text" class="form-control" id="backlog" name="backlog"></td>
+                    </tr>
+                    <tr id="reasonRow" style="display:none;">
+                      <th scope="row" style="vertical-align: top;;">Reason</th>
+                      <td><input type="text" class="form-control" id="reason" name="reason"></td>
+                    </tr>
+                  </tbody>
+                </table>
+                <button type="button" id="submitbutton" class="btn btn-primary" onclick="submitattendance()">Submit</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+</body>
+</html>

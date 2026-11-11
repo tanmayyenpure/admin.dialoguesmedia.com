@@ -1,0 +1,3 @@
+SELECT COALESCE(MAX(emp_id), 0) AS max_code
+FROM employees
+WHERE emp_id LIKE 'DM%';

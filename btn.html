@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Toggle Table Visibility</title>
+    <style>
+        #tableContainer {
+            display: none; /* Initially hide the table container */
+        }
+        .table-container {
+            display: flex;
+        }
+        .table {
+            border-collapse: collapse;
+            width: 30%;
+            text-align: center;
+            margin-right: 10px;
+        }
+        .table th, .table td {
+            border: 1px solid #000;
+            padding: 4px;
+        }
+        .table-header th {
+            background-color: #DBDBDB;
+            color: black;
+        }
+    </style>
+</head>
+<body>
+    <button onclick="toggleTables()">Show/Hide Tables</button>
+
+    <div id="tableContainer" class="table-container">
+        <table id="legendTable" class="table">
+            <thead>
+                <tr class="table-header">
+                    <th colspan="2">Shift Legend</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>I - shift</td>
+                    <td>10:00am - 6/6:30pm</td>
+                </tr>
+                <tr>
+                    <td>II - shift</td>
+                    <td>x</td>
+                </tr>
+                <tr>
+                    <td>III - shift</td>
+                    <td>x</td>
+                </tr>
+                <tr>
+                    <td>N - night shift</td>
+                    <td>x</td>
+                </tr>
+                <tr>
+                    <td>C - common shift</td>
+                    <td>10am - 6pm</td>
+                </tr>
+                <tr>
+                    <td style="background-color: #D04617;">Week Off</td>
+                    <td>Sunday</td>
+                </tr>
+            </tbody>
+        </table>
+        <table id="absenceLegendTable" class="table">
+            <thead>
+                <tr class="table-header">
+                    <th colspan="6">Absence Legend</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>PTO</td>
+                    <td colspan="2">Paid time off</td>
+                    <td>HO</td>
+                    <td colspan="2">Home Office</td>
+                </tr>
+                <tr>
+                    <td>SL</td>
+                    <td colspan="2">Sick Leave</td>
+                    <td>ML</td>
+                    <td colspan="2">Maternity Leave</td>
+                </tr>
+                <tr>
+                    <td>unPTO</td>
+                    <td colspan="2">Unpaid time off</td>
+                    <td>TOL</td>
+                    <td colspan="2">Time off in lieu</td>
+                </tr>
+                <tr>
+                    <td>V</td>
+                    <td colspan="2">Vacation</td>
+                    <td>OL</td>
+                    <td colspan="2">On leave</td>
+                </tr>
+                <tr>
+                    <td>CL</td>
+                    <td colspan="2">Compassionate leave</td>
+                    <td>P</td>
+                    <td colspan="2">Present</td>
+                </tr>
+                <tr>
+                    <td>A</td>
+                    <td colspan="5">Absent</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        function toggleTables() {
+            var container = document.getElementById('tableContainer');
+            if (container.style.display === 'none' || container.style.display === '') {
+                container.style.display = 'flex';
+            } else {
+                container.style.display = 'none';
+            }
+        }
+    </script>
+</body>
+</html>
+
+<div style="display: flex;">
+    <button onclick="toggleTables()">Abbreviation</button>
+
+    <div id="tableContainer" class="table-container">
+        <table id="legendTable" class="table">
+            <thead>
+                <tr class="table-header">
+                    <th colspan="2">Shift Legend</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>I - shift</td>
+                    <td>10:00am - 6/6:30pm</td>
+                </tr>
+                <tr>
+                    <td>II - shift</td>
+                    <td>x</td>
+                </tr>
+                <tr>
+                    <td>III - shift</td>
+                    <td>x</td>
+                </tr>
+                <tr>
+                    <td>N - night shift</td>
+                    <td>x</td>
+                </tr>
+                <tr>
+                    <td>C - common shift</td>
+                    <td>10am - 6pm</td>
+                </tr>
+                <tr>
+                    <td style="background-color: #D04617;">Week Off</td>
+                    <td>Sunday</td>
+                </tr>
+            </tbody>
+        </table>
+        <table id="absenceLegendTable" class="table">
+            <thead>
+                <tr class="table-header">
+                    <th colspan="6">Absence Legend</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>PTO</td>
+                    <td colspan="2">Paid time off</td>
+                    <td>HO</td>
+                    <td colspan="2">Home Office</td>
+                </tr>
+                <tr>
+                    <td>SL</td>
+                    <td colspan="2">Sick Leave</td>
+                    <td>ML</td>
+                    <td colspan="2">Maternity Leave</td>
+                </tr>
+                <tr>
+                    <td>unPTO</td>
+                    <td colspan="2">Unpaid time off</td>
+                    <td>TOL</td>
+                    <td colspan="2">Time off in lieu</td>
+                </tr>
+                <tr>
+                    <td>V</td>
+                    <td colspan="2">Vacation</td>
+                    <td>OL</td>
+                    <td colspan="2">On leave</td>
+                </tr>
+                <tr>
+                    <td>CL</td>
+                    <td colspan="2">Compassionate leave</td>
+                    <td>P</td>
+                    <td colspan="2">Present</td>
+                </tr>
+                <tr>
+                    <td>A</td>
+                    <td colspan="5">Absent</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- abbreviation script -->
+<script>
+    function toggleTables() {
+        var container = document.getElementById('tableContainer');
+        if (container.style.display === 'none' || container.style.display === '') {
+            container.style.display = 'flex';
+        } else {
+            container.style.display = 'none';
+        }
+    }
+</script>

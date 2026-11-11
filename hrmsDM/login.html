@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Insert Employee ID</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f0f0f0;
+        }
+        
+        #employeeForm {
+            width: 310px;
+            margin: 100px auto;
+            padding: 30px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+            align-items: center;
+            text-align: center;
+        }
+        
+        input[type="text"] {
+            width: 100%;
+            padding: 7px;
+            margin: 10px 0;
+            border: 2px solid #8e0c0c;
+            border-radius: 3px;
+        }
+        
+        #myButton {
+            background-color: #8e0c0c;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            width: 310px;
+            margin-left: 5px;
+        }
+        
+        #myButton:hover {
+            background-color: #8e0c0c;
+        }
+        
+        #myButton a {
+            text-decoration: none;
+            color: #fff;
+        }
+        
+        .card {
+            height: 110px;
+            width: 120px;
+            /* background-color: #8e0c0c; */
+            margin-top: -420px;
+            margin-left: 45%;
+        }
+        
+        img {
+            height: 100px;
+            width: 120px;
+            box-shadow: 5px 5px 10px #8e0c0c, -5px -5px 10px #8e0c0c;
+            border-radius: 5px;
+        }
+        
+        img:hover {
+            height: 120px;
+            width: 130px;
+        }
+        @media (max-width: 768px) {
+        h2 {
+            font-size: 22px;
+        }
+
+
+        body{
+            height: auto;
+            width: auto;
+            margin: 0;
+            padding: 0;
+        }
+        #employeeForm {
+            margin-top: 40px;
+            padding: 20px;
+            width: 60%;
+        }
+
+        .myButton,
+        #myButton {
+            font-size: 0.9rem;
+            padding: 10px;
+            width: auto;
+            margin-bottom: 5px;
+        }
+
+        img:hover {
+            height: 110px;
+            width: 125px;
+        }
+    }
+    </style>
+</head>
+
+<body>
+    <div id="employeeForm">
+        <h2>Insert Employee ID</h2>
+        <form id="form">
+            <label for="employeeId">Employee ID:</label>
+            <input type="text" id="employeeId" name="employeeId" required>
+            <input type="file" id="emp_image" name="emp_image" accept="image/*" style="display:none">
+            <br><br>
+            <button type="button" class="myButton" onclick="capturePhoto()">Capture Live Image</button>
+            <button type="button" class="myButton" onclick="marklocation()">mark location</button>
+            <br>
+            <label for="location">Location:</label>
+            <input type="text" id="location" name="location" readonly disabled>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="video wrap">
+                        <video id="video" playsinline autoplay></video>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <canvas id="canvas" width="120" height="120" style="display: none;"></canvas>
+                </div>
+            </div>
+            <button id="myButton" type="button" onclick="uploadAndLogin()">
+                Submit
+            </button>
+        </form>
+    </div>
+    <script src="Template/vendor/jquery/jquery.min.js">
+    </script>
+
+
+    </script>
+    <!-- Core plugin JavaScript-->
+    <script src="Template/vendor/jquery-easing/jquery.easing.min.js"></script>
+    <script>
+        const video = document.getElementById('video');
+        const canvas = document.getElementById('canvas');
+        let stream;
+        let captureMode = 0;
+
+        function openCamera() {
+            const constraints = {
+                audio: false,
+                video: {
+                    width: 120,
+                    height: 120
+                }
+            };
+
+            async function init() {
+                try {
+                    stream = await navigator.mediaDevices.getUserMedia(constraints);
+                    handleSuccess(stream);
+                    captureMode = 1;
+                    //snap.textContent = 'Capture Photo';
+                } catch (e) {
+                    errorMsgElement.innerHTML = `navigator.getUserMedia.error: ${e.toString()}`;
+                }
+            }
+
+            init();
+        }
+
+        function handleSuccess(stream) {
+            window.stream = stream; 
+            video.srcObject = stream;
+        }
+
+        function capturePhoto() {
+            openCamera();
+            var context = canvas.getContext('2d');
+            context.drawImage(video, 0, 0, 120, 120);
+            captureMode = 2;
+            // snap.textContent = 'Show Action Buttons';
+            // document.getElementById('snap').style.display = 'none'
+            // document.getElementById('retake').style.display = 'block';
+            // document.getElementById('upload').style.display = 'block';
+            canvas.style.display = 'block';
+        }
+
+        function closeCamera() {
+            if (stream) {
+                const tracks = stream.getTracks();
+                tracks.forEach(track => track.stop());
+                video.srcObject = null;
+                captureMode = 0;
+
+            }
+        }
+    </script>
+    <script>
+        $(document).ready(function() {
+            //openCamera();
+        });
+
+        function marklocation() {
+            // Check if Geolocation is supported
+            if ('geolocation' in navigator) {
+                navigator.geolocation.getCurrentPosition(function(position) {
+                    // Get latitude and longitude
+                    const latitude = position.coords.latitude;
+                    const longitude = position.coords.longitude;
+
+                    // Set the location input field value
+                    document.getElementById('location').value = `${latitude},${longitude}`;
+                }, function(error) {
+                    console.error('Error getting location:', error.message);
+                    alert('Error getting location. Please try again.');
+                });
+            } else {
+                alert('Geolocation is not supported in your browser.');
+            }
+        }
+
+        function uploadPhoto() {
+            return new Promise((resolve, reject) => {
+                // Get the canvas element and its 2d context
+                const canvas = document.getElementById('canvas');
+                const context = canvas.getContext('2d');
+
+                // Get the image data from the canvas
+                const imageData = context.getImageData(0, 0, canvas.width, canvas.height);
+
+                // Create a new canvas element to draw the image data
+                const tempCanvas = document.createElement('canvas');
+                const tempContext = tempCanvas.getContext('2d');
+                tempCanvas.width = canvas.width;
+                tempCanvas.height = canvas.height;
+                tempContext.putImageData(imageData, 0, 0);
+
+                // Convert the canvas content to a Blob
+                tempCanvas.toBlob(blob => {
+                    if (blob) {
+                        resolve(blob);
+                    } else {
+                        reject(new Error('Unable to convert canvas to Blob.'));
+                    }
+                }, 'image/png'); // Specify the desired image format, e.g., 'image/png'
+            });
+        }
+
+        //time of button
+        // function checkButtonAvailability() {
+        //     const now = new Date();
+        //     const currentHour = now.getHours();
+        //     if (currentHour < 10 || currentHour >= 19) {
+        //         alert("Please try logging in during office hours (10am to 7pm).");
+        //         document.getElementById('restrictedButton').disabled = true;
+        //     } else {
+        //         document.getElementById('restrictedButton').disabled = false;
+        //     }
+        // }
+        //new try
+
+        function checkOfficeHours() {
+            const currentHour = new Date().getHours();
+            const restrictedButton = document.getElementById('restrictedButton');
+
+            if (currentHour < 10 || currentHour >= 19) {
+                alert("Please try logging in during office hours (10am to 7pm).");
+                restrictedButton.disabled = true;
+            } else {
+                restrictedButton.disabled = false;
+            }
+        }
+
+        //window.onload = checkButtonAvailability;
+
+        function uploadAndLogin() {
+
+            // checkOfficeHours()
+
+            uploadPhoto().then(blob => {
+
+                // Get values from the form
+                const employeeId = document.getElementById('employeeId').value;
+                const locationValue = document.getElementById('location').value;
+
+                // Check if location and canvas have values
+                if (!locationValue || !employeeId) {
+                    alert('Location Or EmployeeId Missing');
+                    return;
+                }
+                const canvas = document.getElementById('canvas');
+                if (window.getComputedStyle(canvas).display !== 'block') {
+                    alert('Please capture a photo before submitting.');
+                    return;
+                }
+
+                // Create a FormData object and append the Blob
+                console.log(locationValue);
+
+                const formData = new FormData();
+                formData.append('employeeId', employeeId);
+                formData.append('empImage', blob, 'employee_image.png');
+                formData.append('emp_location', locationValue);
+
+                // Create a new XMLHttpRequest object
+                const xhr = new XMLHttpRequest();
+
+                // Configure it: POST-type request to loginverify.php
+                xhr.open('POST', 'loginverify.php', true);
+
+                // Set up the callback
+                xhr.onreadystatechange = function() {
+                    // Check if the request is complete
+                    if (xhr.readyState == 4) {
+                        // Parse the JSON response
+                        if (xhr.status == 200) {
+                            console.log(xhr.responseText);
+                            var response = JSON.parse(xhr.responseText);
+
+                            // Check if the login was successful
+                            if (response.success) {
+                                window.location.href = 'EmployeeTasks/EmployeeTasksListing.php?emp_id=' + employeeId;
+                                console.log('Login successful');
+                                // Additional actions for successful login
+                            } else {
+                                alert('Login failed. ' + response.message);
+                            }
+                        } else {
+                            console.error('Error:', xhr.status, xhr.statusText);
+                        }
+                    }
+                };
+
+                xhr.send(formData);
+
+            }).catch(error => {
+                console.error('Error:', error.message);
+            });
+        }
+    </script>
+</body>
+
+</html>

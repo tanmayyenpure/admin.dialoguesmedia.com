@@ -1,0 +1,18 @@
+Array
+(
+    [name] => 6263752-uhd_2160_3840_25fps.mp4
+    [full_path] => 6263752-uhd_2160_3840_25fps.mp4
+    [type] => video/mp4
+    [tmp_name] => C:\xampp\tmp\php3683.tmp
+    [error] => 0
+    [size] => 24975141
+)
+Array
+(
+    [name] => 7235791-uhd_2160_3462_30fps.mp4
+    [full_path] => 7235791-uhd_2160_3462_30fps.mp4
+    [type] => video/mp4
+    [tmp_name] => C:\xampp\tmp\php8462.tmp
+    [error] => 0
+    [size] => 11360116
+)

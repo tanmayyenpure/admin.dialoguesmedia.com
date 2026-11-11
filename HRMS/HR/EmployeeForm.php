@@ -1,0 +1,1065 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../Template/css/bootstrap.min.css">
+    <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
+    <!-- <link rel="stylesheet" href="../css/style.css"> -->
+    <link href="../Template/vendor/fontawesome-free/css/all.css" rel="stylesheet" type="text/css">
+    <title>Employee Form</title>
+</head>
+
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Poppins:wght@400;500;600;700&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+a {
+    text-decoration: none;
+}
+
+li {
+    list-style: none;
+}
+
+:root {
+    --poppins: 'Poppins', sans-serif;
+    --lato: 'Lato', sans-serif;
+    --light: #8e0c0c;
+    --blue: #f0e5e5;
+    --grey: #D7DBDD;
+    --light-blue: #fff;
+    --dark-grey: rgb(165, 158, 158);
+    --dark: rgb(67, 67, 67);
+    /* --red: #DB504A; */
+    --yellow: #fff;
+    --light-yellow: #FFF2C6;
+    /* --orange: #FD7238; */
+    --light-orange: #FFE0D3;
+}
+
+a {
+    color: white;
+}
+
+.text-primary {
+    color: #007bff !important;
+}
+
+html {
+    overflow-x: hidden;
+}
+
+body.dark {
+    --light: #0C0C1E;
+    --grey: #060714;
+    --dark: #FBFBFB;
+}
+
+body {
+    background: var(--grey);
+    /* overflow-x: hidden; */
+}
+
+
+/* SIDEBAR */
+
+#sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 280px;
+    height: 100%;
+    background: var(--light);
+    z-index: 2000;
+    font-family: var(--lato);
+    transition: .3s ease;
+    overflow-x: hidden;
+    scrollbar-width: none;
+}
+
+#sidebar::--webkit-scrollbar {
+    display: none;
+}
+
+#sidebar.hide {
+    width: 60px;
+}
+
+#sidebar .brand {
+    font-size: 24px;
+    font-weight: 700;
+    height: 37px;
+    display: flex;
+    align-items: center;
+    color:  #8e0c0c;
+    position: sticky;
+    top: 0;
+    left: 0;
+    background: white;
+    z-index: 500;
+    padding: 10px;
+    box-sizing: content-box;
+}
+
+#sidebar .brand .bx {
+    min-width: 60px;
+    display: flex;
+    justify-content: center;
+}
+
+#sidebar .side-menu {
+    width: 100%;
+    margin-top: 48px;
+}
+
+#sidebar .side-menu li {
+    height: 48px;
+    background: transparent;
+    margin-left: 6px;
+    border-radius: 48px 0 0 48px;
+    padding: 4px;
+}
+
+#sidebar .side-menu li.active {
+    background: var(--grey);
+    position: relative;
+}
+
+#sidebar .side-menu li.active::before {
+    content: '';
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    top: -40px;
+    right: 0;
+    box-shadow: 20px 20px 0 var(--grey);
+    z-index: -1;
+}
+
+#sidebar .side-menu li.active::after {
+    content: '';
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    bottom: -40px;
+    right: 0;
+    box-shadow: 20px -20px 0 var(--grey);
+    z-index: -1;
+}
+
+#sidebar .side-menu li a {
+    width: 100%;
+    height: 100%;
+    background: var(--light);
+    display: flex;
+    align-items: center;
+    border-radius: 48px;
+    font-size: 15px;
+    color: var(--dark);
+    white-space: nowrap;
+    overflow-x: hidden;
+}
+
+#sidebar .side-menu.top li.active a {
+    color: #8e0c0c;
+}
+
+#sidebar.hide .side-menu li a {
+    width: calc(48px - (4px * 2));
+    transition: width .3s ease;
+}
+
+#sidebar .side-menu li a.logout {
+    color: var(--red);
+}
+
+#sidebar .side-menu.top li a:hover {
+    color: #8e0c0c;
+}
+
+#sidebar .side-menu li a .bx {
+    min-width: calc(60px - ((4px + 6px) * 2));
+    display: flex;
+    justify-content: center;
+}
+
+
+/* SIDEBAR */
+
+
+/* CONTENT */
+
+#content {
+    position: relative;
+    width: calc(100% - 280px);
+    left: 280px;
+    transition: .3s ease;
+}
+
+#sidebar.hide~#content {
+    width: calc(100% - 60px);
+    left: 60px;
+}
+
+
+/* NAVBAR */
+
+#content nav {
+    height: 56px;
+    background-color: #fff;
+    padding: 0 24px;
+    display: flex;
+    align-items: center;
+    grid-gap: 24px;
+    font-family: var(--lato);
+    position: sticky;
+    top: 20px;
+    left: 0;
+    z-index: 1000;
+}
+
+#content nav::before {
+    content: '';
+    position: absolute;
+    width: 2px;
+    height: 2px;
+    bottom: -40px;
+    left: 0;
+    border-radius: 50%;
+    box-shadow: -20px -20px 0 var(--light);
+}
+
+#content nav a {
+    color: var(--dark);
+}
+
+#content nav .bx.bx-menu {
+    cursor: pointer;
+    color: #8e0c0c;
+    font-size: x-large;
+}
+
+#content nav .nav-link {
+    font-size: 16px;
+    transition: .3s ease;
+    color: black;
+}
+
+#content nav .nav-link:hover {
+    color: var(--blue);
+}
+
+#content nav form {
+    max-width: 400px;
+    width: 100%;
+    margin-right: auto;
+}
+
+#content nav form .form-input {
+    display: flex;
+    align-items: center;
+    height: 36px;
+}
+
+#content nav form .form-input input {
+    flex-grow: 1;
+    padding: 0 16px;
+    height: 100%;
+    border: none;
+    background: var(--grey);
+    border-radius: 36px 0 0 36px;
+    outline: none;
+    width: 100%;
+    color: var(--dark);
+}
+
+#content nav form .form-input button {
+    width: 36px;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* background: var(--blue); */
+    background-color: #8e0c0c;
+    /* color: var(--light); */
+    color: #fff;
+    font-size: 18px;
+    border: none;
+    outline: none;
+    border-radius: 0 36px 36px 0;
+    cursor: pointer;
+}
+
+#content nav .notification {
+    font-size: 20px;
+    position: relative;
+}
+
+#content nav .notification .num {
+    position: absolute;
+    top: -6px;
+    right: -6px;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 2px solid var(--light);
+    background: var(--red);
+    color: var(--light);
+    font-weight: 700;
+    font-size: 12px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#content nav .profile img {
+    width: 36px;
+    height: 36px;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+#content nav .switch-mode {
+    display: block;
+    min-width: 50px;
+    height: 25px;
+    border-radius: 25px;
+    background: var(--grey);
+    cursor: pointer;
+    position: relative;
+}
+
+#content nav .switch-mode::before {
+    content: '';
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    bottom: 2px;
+    width: calc(25px - 4px);
+    background: var(--blue);
+    border-radius: 50%;
+    transition: all .3s ease;
+}
+
+#content nav #switch-mode:checked+.switch-mode::before {
+    left: calc(100% - (25px - 4px) - 2px);
+}
+
+
+/* NAVBAR */
+
+
+/* MAIN */
+
+#content main {
+    width: 100%;
+    padding: 36px 24px;
+    font-family: var(--poppins);
+    max-height: calc(100vh - 56px);
+    overflow-y: auto;
+}
+
+#content main .head-title {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    grid-gap: 16px;
+    flex-wrap: wrap;
+}
+
+#content main .head-title .left h1 {
+    font-size: 36px;
+    font-weight: 600;
+    margin-bottom: 10px;
+    /* color: var(--dark); */
+}
+
+#content main .head-title .left .breadcrumb {
+    display: flex;
+    align-items: center;
+    grid-gap: 16px;
+}
+
+#content main .head-title .left .breadcrumb li {
+    color: var(--dark);
+}
+
+#content main .head-title .left .breadcrumb li a {
+    color: black;
+    pointer-events: none;
+}
+
+#content main .head-title .left .breadcrumb li a.active {
+    color: var(--blue);
+    pointer-events: unset;
+}
+
+#content main .head-title .btn-download {
+    height: 36px;
+    padding: 0 16px;
+    border-radius: 36px;
+    background: var(--blue);
+    color: var(--light);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    grid-gap: 10px;
+    font-weight: 500;
+}
+
+#content main .box-info {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    grid-gap: 24px;
+    margin-top: 36px;
+}
+
+#content main .box-info li {
+    padding: 24px;
+    /* background: var(--light); */
+    background-color: #8e0c0c;
+    box-shadow: 5px 5px 5px #8e0c0c;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    grid-gap: 24px;
+}
+
+#content main .box-info li .bx {
+    width: 80px;
+    height: 80px;
+    border-radius: 10px;
+    font-size: 36px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #fff;
+    color: #8e0c0c;
+}
+
+#content main .box-info li:nth-child(1) .bx {
+    background: #fff;
+    color: #8e0c0c;
+}
+
+#content main .box-info li:nth-child(2) .bx {
+    background: #fff;
+    color: #8e0c0c;
+}
+
+#content main .box-info li:nth-child(3) .bx {
+    background: #fff;
+    color: #8e0c0c;
+}
+
+img {
+    height: 25px;
+    width: 25px;
+    margin: 20px;
+}
+
+#sidebar .side-menu li a {
+    background-color: #fff;
+    border: 1px solid black;
+    color: #08010b;
+}
+
+.nav {
+    background-color: #08010b;
+}
+
+.submenu {
+			display: none;
+			/* Hide the submenu by default */
+			position: relative;
+			background-color: #8e0c0c01;
+			/* Background color of the submenu */
+			box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+			/* Optional: Box shadow for a nice effect */
+			/* //z-index: 1; */
+			/* Ensure the submenu appears above other content */
+		}
+
+		/* Styling for the submenu items */
+		.submenu li {
+			display: block;
+		}
+
+		.submenu li a {
+			display: block;
+			/* padding: 10px 20px;
+			Padding for submenu item */
+			color: #333;
+			/* Text color */
+			text-decoration: none;
+			/* Remove underline */
+		}
+
+		.submenu li a:hover {
+			background-color: #8e0c0c;
+			/* Background color on hover */
+		}
+
+		/* Show the submenu when parent <a> is hovered */
+		a:hover+.submenu,
+		.submenu:hover {
+			display: block;
+		}
+
+
+.btn-container {
+			/* position: fixed; */
+			bottom: 20px;
+			margin-bottom: 50px;
+            margin-top:50px;
+			/* Adjust this value as needed */
+		}
+
+		.btnhrms {
+			padding: 10px 20px;
+			background-color: #8e0c0c;
+			border: 2px solid white;
+			border-radius: 20px;
+			text-align: center;	
+		}
+
+
+@media (max-width: 780px) {
+			#content {
+				width: 1144px;
+			}
+		}
+</style>
+<body>
+
+    <!-- SIDEBAR -->
+	<section id="sidebar">
+		<a href="#" class="brand">
+			<img src="../img/apple-touch-icon.png" alt="">
+			<span class="text">Dialoguesmedia</span>
+		</a>
+		<ul class="side-menu top">
+    <li >
+				<a href="../../Dashboard/AdminDashboard.php">
+					<i class='bx bxs-dashboard'></i>
+					<span class="text">Main Dashboard</span>
+				</a>
+			</li>
+			<li class="has-submenu">
+				<a href="#">
+					<i class='bx bxs-megaphone'></i>
+					<span class="text">Marketing</span>
+				</a>
+
+				<!-- Submenu for Marketing -->
+				<ul class="submenu" >
+					<!-- Submenu item for My Projects -->
+					<li>
+						<a href="../Dashboard/MarketingProjects.php">
+							<span class="text" style="text-align: center;padding-left: 20px;">My Projects</span>
+						</a>
+					</li>
+					<!-- Submenu item for New Project -->
+					<li>
+						<a href="../Project/ProjectListing.php">
+							<span class="text" style="text-align: center;padding-left: 20px;">New Project</span>
+						</a>
+					</li>
+				</ul>
+			<li><a href="#">
+					<span class="text" style="text-align: center;padding-left: 20px;">Digital Marketing</span>
+				</a></li>
+			<li><a href="#">
+					<span class="text" style="text-align: center;padding-left: 20px;">Photography</span>
+				</a></li>
+			<li><a href="../../Media/client_medialisting.php">
+					<span class="text" style="text-align: center;padding-left: 20px;">Media Data</span>
+				</a></li>
+                <li class="active"><a href="EmployeeForm.php">
+					<span class="text" style="text-align: center;padding-left: 20px;">Create Employee</span>
+				</a></li>
+                <li><a href="../employeelisting.php">
+					<span class="text" style="text-align: center;padding-left: 20px;">Employee Details</span>
+				</a></li>
+				<li><a href="HRListing.php">
+					<span class="text" style="text-align: center;padding-left: 20px;">HR Listing</span>
+				</a></li>
+        <li><a href="../../ManageUsers/Users.php">
+					<span class="text" style="text-align: center;padding-left: 20px;">Manage User</span>
+				</a></li>
+
+        <div class="btn-container">
+			<a href="../HRMS/HrmsDashboard.php" class="btnhrms" style="left: 87px; position: relative;">
+				<span class="text" style="text-align: center;padding-left: 0px; top: 0px;position:relative;color:white;">HRMS</span>
+			</a>
+		</div>
+
+    </ul>
+		
+	</section>
+	<!-- SIDEBAR -->
+    <!-- CONTENT -->
+	<section id="content">
+		<!-- NAVBAR -->
+		<nav>
+			<i class='bx bx-menu' ></i>
+			<a href="#" class="nav-link">Search here</a>
+			<form action="#">
+				<div class="form-input">
+					<input type="search" placeholder="Search...">
+					<button type="submit" class="search-btn"><i class='bx bx-search' ></i></button>
+				</div>
+			</form>
+
+			<a href="#" class="profile">
+			</a>
+		</nav>
+		<!-- NAVBAR -->
+
+		<!-- MAIN -->
+		<main>
+        <div class="popup" id="popup-2">
+        <div class="content">
+            <div class="close-btn"></div>
+            <div class="card shadow mb-4">
+            <div class="card-header py-3  d-flex justify-content-between align-items-center">
+                <h6 class="m-0 font-weight-bold text-danger fs-30">Employee</h6>
+                <div class="d-flex">
+                <a href="EmployeeListing.php" class="btn btn-danger btn-circle" data-toggle="tooltip" data-title="Employee Listing">
+                        <i class="fas fa-arrow-left"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="card-body">
+            <form id="EmployeeForm">
+                <div class="form-group">
+                    <label for="emp_id">Employee ID</label>
+                    <input type="text" placeholder="Employee-Id" id="emp_id" class="form-control" name="emp_id" required readonly>
+                </div>
+
+                <div class="form-group">
+                    <label for="name">Name *</label>
+                    <input type="text" placeholder="Name" id="name" class="form-control" name="name" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="aadhar_card_no">Aadhar Card Number *</label>
+                    <input type="text" placeholder="Aadhar Card Number" id="aadhar_card_no" class="form-control" name="aadhar_card_no" maxlength="12" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="pan_card">PAN Card</label>
+                    <input type="text" placeholder="PAN Card" id="pan_card" class="form-control" name="pan_card">
+                </div>
+
+                <div class="form-group">
+                    <label for="mobile_number">Mobile Number</label>
+                    <input type="text" placeholder="Mobile Number" id="mobile_number" class="form-control" name="mobile_number" maxlength="15">
+                </div>
+
+                <div class="form-group">
+                    <label for="department_name">Department Name *</label>
+                    <select id="department_name" class="form-control" name="department_name" onchange="handleDepartmentChange()">
+                    <option value="Human Resources">Human Resources</option>
+                    <option value="Marketing">Marketing</option>
+                    <option value="HR">HR</option>
+                    <option value="Sales">Sales</option>
+                    <option value="Web">Web</option>
+                    <option value="Others">Others</option>
+                                        </select>
+                </div>
+
+
+                <div class="form-group">
+                    <label for="job_role">Job Role</label>
+                    <input type="text" placeholder="Job Role" id="job_role" class="form-control" name="job_role">
+                </div>
+                <?php
+                    $buttonText = isset($_GET['emp_id']) ? 'Update Employee' : 'Add Employee';
+                    $onClickFunction = isset($_GET['emp_id']) ? 'updateForm()' : 'submitForm()';
+
+                    // Add a condition for delete
+                    if (isset($_GET['emp_id']) && isset($_GET['delete'])) {
+                        $onClickFunction = 'deleteForm()';
+                        $buttonText = 'Delete Employee';
+                    }
+                ?>
+                <button class="btn btn-danger" type="button" onclick="<?php echo $onClickFunction; ?>; resetFormValues(); location.reload();">
+                    <?php echo $buttonText; ?>
+                </button>
+            </form>
+            </div>
+            </div>
+        </div>
+
+       
+        </div>
+        <!-- End of Main Content -->
+
+        </div>
+
+        
+        </div>
+        
+		</main>
+		<!-- MAIN -->
+	</section>
+
+    
+	<!-- CONTENT -->
+    <?php
+   function getNextEmployeeCode() 
+   {
+       // Read the query from the text file
+       $queryFilePath = 'GetMaxCode.txt';
+       $query = file_get_contents($queryFilePath);
+   
+       include '../formconnection.php'; // Include your database connection file
+   
+       $result = $conn->query($query);
+   
+       if ($result->num_rows > 0) {
+           $row = $result->fetch_assoc();
+           $maxCode = $row["max_code"];
+           if ($maxCode == '0') {
+               $nextCode = 'DM001';
+           } else {
+               $nextNumber = (int)substr($maxCode, 2) + 1;
+               $nextCode = 'DM' . str_pad($nextNumber, 3, '0', STR_PAD_LEFT);
+           }
+           // Return the next code
+           return $nextCode;
+       }
+   
+       $conn->close();
+   }
+   function setEmployeeValues($emp_id)
+   {
+    try
+    {
+        $baseURL = "http://" . $_SERVER['HTTP_HOST'] . dirname($_SERVER['PHP_SELF']);
+        $readEmployeeUrl = "$baseURL/read_employee.php?emp_id=$emp_id";
+        $readEmployeeData = file_get_contents($readEmployeeUrl);
+        $employeeData = json_decode($readEmployeeData, true);
+        if ($employeeData['status'] === 'success') {
+            // Set values in all fields using JavaScript
+            echo "<script>
+            document.getElementById('emp_id').value = '{$employeeData['data']['emp_id']}';
+            document.getElementById('name').value = '{$employeeData['data']['name']}';
+            document.getElementById('aadhar_card_no').value = '{$employeeData['data']['aadhar_card_no']}';
+            document.getElementById('pan_card').value = '{$employeeData['data']['pan_card']}';
+            document.getElementById('mobile_number').value = '{$employeeData['data']['mobile_number']}';
+            document.getElementById('job_role').value = '{$employeeData['data']['job_role']}';
+    
+            var departmentTypeDropdown = document.getElementById('department_name');
+            var projectDropdown = document.getElementById('project_id');
+            var projectGroup = document.getElementById('projectGroup');
+            var departmentTypeValue = '{$employeeData['data']['department_name']}';
+            departmentTypeDropdown.value = departmentTypeValue !== 'null' ? departmentTypeValue : departmentTypeDropdown.options[0].value;
+            projectGroup.style.display = (departmentTypeValue === '2') ? 'block' : 'none';
+            // Set project_id dropdown value if department_name is 2
+            if (departmentTypeValue === '2') {
+                var projectValue = '{$employeeData['data']['project_id']}';
+                // Set project_id dropdown value if it's not null, otherwise set the first option
+                projectDropdown.value = projectValue !== 'null' ? projectValue : projectDropdown.options[0].value;
+            }
+        </script>";
+        } else {
+            echo "<script>alert('Error: Unable to fetch employee data');</script>";
+        }
+    }
+    catch (Exception $e)    
+    {
+        echo "<script>alert('Error: Caught exception - " . $e->getMessage() . "');</script>";
+    }
+   }
+   
+   if (isset($_GET['emp_id'])) {
+    $emp_id = $_GET['emp_id'];
+    echo "<script>document.addEventListener('DOMContentLoaded', function () {
+        editEmployee('$emp_id');
+    });</script>";
+}
+ else {
+    $emp_id = getNextEmployeeCode();
+    echo "<script>document.getElementById('emp_id').value = '$emp_id';</script>";
+    } 
+    ?>
+</body>
+<script src="../Template/vendor/jquery/jquery.min.js"></script>
+    <script src="../Template/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- Core plugin JavaScript-->
+    <script src="../Template/vendor/jquery-easing/jquery.easing.min.js"></script>
+    <script src="../Template/js/popper.min.js"></script>
+    
+   
+<script>
+     $(document).ready(function () {
+    // Initialize DataTable
+    $('[data-toggle="tooltip"]').tooltip();
+    $.ajax({
+    url: '../Project/read_project.php',
+    type: 'GET',
+    dataType: 'json',
+    success: function (response) {
+        if (response.status === 'success') {
+            var projects = response.data;
+
+            // Clear existing options in the select dropdown
+            $('#project_id').empty();
+
+            // Populate dropdown options
+            projects.forEach(function (project) {
+                $('#project_id').append($('<option>', {
+                    value: project.pid,
+                    text: project.Pname
+                }));
+            });
+        } else {
+            console.error('Error fetching data:', response.message);
+        }
+    },
+    error: function (xhr, status, error) {
+        console.error('AJAX Error:', status, error);
+    }
+});
+
+    });
+
+
+
+    function deleteEmployee(event, emp_id) {
+    event.preventDefault(); // 🔥 Stops page reload
+
+    if (confirm("Are you sure you want to delete this employee?")) {
+        $.ajax({
+            url: 'delete_employee.php',
+            method: 'POST',
+            data: { emp_id: emp_id },
+            dataType: 'json',
+            success: function (response) {
+                if (response.status === 'success') {
+                    alert(response.message);
+                    location.reload(); 
+                } else {
+                    alert("Failed to delete: " + response.message);
+                }
+            },
+            error: function (xhr) {
+                console.error("Delete error:", xhr.responseText);
+                alert("Something went wrong while deleting.");
+            }
+        });
+    }
+}
+
+    function updateForm() {
+    const form = document.getElementById('EmployeeForm');
+    const formData = new FormData(form);
+
+    const xhr = new XMLHttpRequest();
+    xhr.open('POST', 'update_employee.php', true);
+
+    console.log("Raw Response:", xhr.responseText); 
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4) {
+            try {
+                const response = JSON.parse(xhr.responseText);
+                if (xhr.status === 200 && response.status === 'success') {
+                    alert(response.message);
+                    form.reset();
+                    location.reload();
+                } else {
+                    alert("Error: " + response.message);
+                }
+            } catch (e) {
+                console.error("Invalid JSON response:", xhr.responseText);
+                // alert("Something went wrong while updating the form.");
+            }
+        }
+    };
+
+    xhr.send(formData);
+}
+
+ 
+    function submitForm() {
+    const form = document.getElementById('EmployeeForm');
+    const formData = new FormData(form);
+
+    const xhr = new XMLHttpRequest();
+    xhr.open('POST', 'create_employee.php', true);
+
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4) {
+            try {
+                const response = JSON.parse(xhr.responseText);
+                if (xhr.status === 200 && response.status === 'success') {
+                    alert(response.message);
+                    form.reset(); // Reset form
+                    location.reload();
+                } else {
+                    alert("Error: " + response.message);
+                }
+            } catch (e) {
+                console.error("Invalid JSON response:", xhr.responseText);
+                // alert("Something went wrong while submitting the form.");
+            }
+        }
+    };
+
+    xhr.send(formData);
+}
+
+
+
+     function resetFormValues() {
+    var elements = [
+        'emp_id','name', 'aadhar_card_no', 'pan_card', 'mobile_number', 
+        'department_name', 'project_id', 'job_role'
+    ];
+
+    elements.forEach(function(elementId) {
+        var element = document.getElementById(elementId);
+        if (element) {
+            if (element.tagName === 'INPUT' || element.tagName === 'TEXTAREA') {
+                element.value = ''; // Clear input and textarea fields
+            } else if (element.tagName === 'SELECT') {
+                element.selectedIndex = 0; // Reset to first option
+            } else {
+                element.innerText = ''; // Reset text content for other elements
+            }
+        }
+    });
+
+    // If using checkboxes or radio buttons, reset them too
+    var checkboxes = document.querySelectorAll('input[type="checkbox"], input[type="radio"]');
+    checkboxes.forEach(function(checkbox) {
+        checkbox.checked = false;
+    });
+}
+
+
+</script>
+
+    <script>
+function handleDepartmentChange() {
+    const dept = document.getElementById("department_name").value;
+    const projectGroup = document.getElementById("projectGroup");
+
+    if (dept === "Web") {
+        projectGroup.style.display = "block";
+    } else {
+        projectGroup.style.display = "none";
+        document.getElementById("project_id").value = ""; // clear project_id
+    }
+}
+</script>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<!-- <script>
+$(document).ready(function () {
+    // Load employees into the table
+    loadEmployees();
+
+  
+// Load employee list
+function loadEmployees() {
+    $.ajax({
+        url: 'getall_employees.php',
+        method: 'GET',
+        dataType: 'json',
+        success: function (response) {
+            if (response.status === 'success') {
+                let rows = '';
+                response.data.forEach(function (emp) {
+                    rows += `
+                        <tr>
+                            <td>${emp.emp_id}</td>
+                            <td>${emp.name}</td>
+                            <td>${emp.aadhar_card_no}</td>
+                            <td>${emp.pan_card}</td>
+                            <td>${emp.mobile_number}</td>
+                            <td>${emp.department_name}</td>
+                            <td>${emp.job_role}</td>
+                           <td class="text-center" style="display:flex;">
+                                <a href="?emp_id=${emp.emp_id}" class="btn btn-sm btn-warning edit-btn" data-id="${emp.emp_id}" onclick="editEmployee('${emp.emp_id}')" style="margin-right:5px;">
+                                    <i class="fas fa-edit"></i>
+                                </a>
+                              <a href="#" class="btn btn-sm btn-danger" onclick="deleteEmployee(event, '${emp.emp_id}')">
+                                  <i class="fas fa-trash-alt"></i>
+                               </a>
+
+
+                            </td>
+                        </tr>
+                    `;
+                });
+                $('#employeeTable tbody').html(rows);
+            } else {
+                alert("Failed to fetch employee data.");
+            }
+        },
+        error: function (xhr) {
+            console.error("Error:", xhr.responseText);
+        }
+    });
+}
+});
+</script> -->
+
+<script>
+function editEmployee(emp_id) {
+    $.ajax({
+        url: 'getall_employees.php',
+        method: 'GET',
+        data: { emp_id: emp_id },
+        dataType: 'json',
+        success: function(response) {
+            if (response.status === 'success') {
+                const emp = response.data;
+
+                $('#emp_id').val(emp.emp_id);
+                $('#name').val(emp.name);
+                $('#aadhar_card_no').val(emp.aadhar_card_no);
+                $('#pan_card').val(emp.pan_card);
+                $('#mobile_number').val(emp.mobile_number);
+                $('#job_role').val(emp.job_role);
+                $('#department_name').val(emp.department_name);
+
+                if (emp.department_name === "Web") {
+                    $('#projectGroup').show();
+                    $('#project_id').val(emp.project_id);
+                } else {
+                    $('#projectGroup').hide();
+                    $('#project_id').val('');
+                }
+
+                // Optional scroll to top of form
+                $('html, body').animate({ scrollTop: 0 }, 'fast');
+            } else {
+                alert('Failed to fetch employee data: ' + response.message);
+            }
+        },
+        error: function(xhr, status, error) {
+            console.error('AJAX Error:', error);
+            alert('An error occurred while fetching data.');
+        }
+    });
+}
+</script>
+
+
+    
+</html>
+

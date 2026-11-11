@@ -1,0 +1,3 @@
+SELECT CONCAT(e.emp_id, ' | ', e.name) AS empnameid
+FROM employees e
+ORDER BY e.emp_id ASC;
